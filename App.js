@@ -1,16 +1,16 @@
 import React from 'react'
 
 import {
-  View, Text, SafeAreaView
+  View,Text,SafeAreaView
 } from 'react-native'
+import AppPro from './Apppro.tsx';
 
-import AppPro from './Apppro.tsx'
-
-
-function App() {
-  return (
-        <AppPro />
+function App(){
+  return(
+    <AppPro/>
   )
+
 }
+
 
 export default App;
