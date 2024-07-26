@@ -4,6 +4,7 @@ import {
   } from 'react-native'
 import FlatCards from "./Components/FlatCards";
 import ElevatedCards from "./Components/ElevatedCards";
+import FancyCards from "./Components/FancyCards";
   
 function AppPro():JSX.Element{
     const isDarkMode=useColorScheme()==='dark'
@@ -13,6 +14,7 @@ function AppPro():JSX.Element{
             <ScrollView>
             <FlatCards/>
             <ElevatedCards/>
+            <FancyCards/>
             </ScrollView>
         </SafeAreaView>
        )
