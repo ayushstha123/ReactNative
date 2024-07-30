@@ -117,7 +117,7 @@ export default function App() {
                     <BouncyCheckbox
                       isChecked={upperCase}
                       onPress={() => setupperCase(!upperCase)}
-
+                      fillColor='red'
                     />
                     <Text>Include UpperCase</Text>
                   </View>
@@ -126,7 +126,7 @@ export default function App() {
                     <BouncyCheckbox
                       isChecked={numbers}
                       onPress={() => setnumbers(!numbers)}
-
+                      fillColor='blue'
                     /><Text>Include Numbers</Text>
                   </View>
                   <View style={styles.checkboxGroup}>
@@ -134,7 +134,7 @@ export default function App() {
                     <BouncyCheckbox
                       isChecked={symbols}
                       onPress={() => setsymbols(!symbols)}
-
+                      fillColor='purple'
                     /><Text>Include Symbols</Text>
                   </View>
                 </View>
@@ -149,6 +149,7 @@ export default function App() {
                 {isPassGenerated && (
                   <View style={styles.passwordContainer}>
                     <Text disabled={!isValid} style={styles.passwordText}>Generated Password:</Text>
+                    <Text disabled={!isValid} style={styles.passwordCopy}>Double tap to copy password</Text>
                     <Text selectable={true} style={styles.password}>{password}</Text>
                   </View>
                 )}
@@ -166,6 +167,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     backgroundColor: '#f5f5f5',
     padding: 20,
+    justifyContent:'center'
   },
   innerContainer: {
     backgroundColor: '#fff',
@@ -178,9 +180,9 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
+    fontSize: 25,
+    fontWeight: '900',
+    marginBottom: 25,
     textAlign: 'center',
   },
   inputContainer: {
@@ -224,6 +226,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#007bff',
     padding: 12,
     borderRadius: 8,
+  },
+  passwordCopy:{
+    fontWeight:'thin',
+    fontSize:15,
+    color:'blue',
+
   },
   buttonText: {
     color: '#fff',
