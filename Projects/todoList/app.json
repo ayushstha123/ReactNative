@@ -20,6 +20,7 @@
         "backgroundColor": "#ffffff"
       }
     },
+      "scheme": "your-app-scheme",
     "web": {
       "favicon": "./assets/favicon.png"
     },
