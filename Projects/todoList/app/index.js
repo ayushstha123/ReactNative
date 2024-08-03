@@ -9,6 +9,7 @@ export default function Page() {
     </View>
   );
 }
+//mongodb+srv://test:test@cluster0.yeol1vi.mongodb.net/
 
 const styles = StyleSheet.create({
   container: {
