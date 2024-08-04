@@ -4,47 +4,67 @@ import Foundation from '@expo/vector-icons/Foundation';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function Layout() {
   return (
-    <Tabs>
+
+    <Tabs screenOptions={{
+      tabBarStyle: {
+        backgroundColor: 'white', // Change the background color here
+      },
+    }}>
       <Tabs.Screen name='home' options={{
         tabBarLabel: "Home",
-        tabBarLabelStyle: { color: "#7CB9E8" },
+        tabBarLabelStyle: {
+          marginBottom: 5,
+          color: "black",
+          fontFamily: "Arial",
+          fontWeight: "thin"
+        },
         headerShown: false,
-        tabBarIcon: ({ focused }) => {
+        tabBarIcon: ({ focused }) => (
           focused ? (
-            <FontAwesome name="home" size={24} color="#7CB9E8" />
+            <FontAwesome name="home" size={24} color="#616161" />
 
           )
             : (
               <FontAwesome name="home" size={24} color="black" />
             )
-        }
+        )
       }} />
 
       {/* for calender */}
       <Tabs.Screen name='calender' options={{
         tabBarLabel: "Calender",
-        tabBarLabelStyle: { color: "#7CB9E8" },
+        tabBarLabelStyle: {
+          marginBottom: 5,
+          color: "black",
+          fontFamily: "Arial",
+          fontWeight: "thin"
+        },
         headerShown: false,
-        tabBarIcon: ({ focused }) => {
+        tabBarIcon: ({ focused }) => (
           focused ? (
-            <Foundation name="calendar" size={24} color="#7CB9E8" />
+            <Foundation name="calendar" size={24} color="#616161" />
           )
             : (
               <Foundation name="calendar" size={24} color="black" />)
-        }
+        )
       }} />
       {/* for profile */}
       <Tabs.Screen name='profile' options={{
         tabBarLabel: "Profile",
-        tabBarLabelStyle: { color: "#7CB9E8" },
+        tabBarLabelStyle: {
+          marginBottom: 5,
+          color: "black",
+          fontFamily: "Arial",
+          fontWeight: "thin"
+        },
         headerShown: false,
-        tabBarIcon: ({ focused }) => {
+        tabBarIcon: ({ focused }) => (
           focused ? (
-            <MaterialCommunityIcons name="account" size={24} color="#7CB9E8" />
+            <MaterialCommunityIcons name="account" size={24} color="#616161" />
           )
             : (
-              <MaterialCommunityIcons name="account" size={24} color="black" />        
-            )}
+              <MaterialCommunityIcons name="account" size={24} color="black" />
+            ))
       }} />
 
     </Tabs>

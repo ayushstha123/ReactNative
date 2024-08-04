@@ -1,12 +1,9 @@
+import { Redirect } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 
 export default function Page() {
   return (
-    <View style={styles.container}>
-      <View style={styles.main}>
-        <Text style={styles.title}>Hello World how are you</Text>
-      </View>
-    </View>
+    <Redirect href="/(tabs)/home" />
   );
 }
 //mongodb+srv://test:test@cluster0.yeol1vi.mongodb.net/
@@ -16,6 +13,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     padding: 24,
+    backgroundColor:"black",
   },
   main: {
     flex: 1,
