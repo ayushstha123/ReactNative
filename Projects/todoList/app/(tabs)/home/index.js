@@ -40,7 +40,7 @@ export default function index() {
           {todos?.length > 0 ? (
             <View></View>
           ) : (
-            <View style={{ paddingTop: "50%", paddingBottom: "50%",justifyContent:'center',alignItems:'center' }}>
+            <View style={{ paddingTop: "40%", paddingBottom: "auto",justifyContent:'center',alignItems:'center' }}>
               <Image
                 style={{ width: 200, height: 200, resizeMode: "cover", margin: 10, borderRadius: "50%" }}
                 source={{
