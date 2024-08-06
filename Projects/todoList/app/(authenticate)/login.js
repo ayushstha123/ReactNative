@@ -4,10 +4,12 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { KeyboardAvoidingView, TextInput } from 'react-native-web'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { useRouter } from 'expo-router';
 
 const login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router=useRouter();
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "black", alignItems: "center" }}>
       <View style={{ marginTop: 100 }}>
@@ -45,7 +47,7 @@ const login = () => {
             <Pressable style={{backgroundColor:"white",padding:10,alignItems:"center",justifyContent:"center",borderRadius:5}}>
               <Text style={{color:"black",textAlign:'center',fontWeight:'bold',fontSize:16,fontFamily:'arial'}}>Login</Text>
             </Pressable>
-            <Pressable style={{marginTop:16}}>
+            <Pressable onPress={()=>router.replace('/register')} style={{marginTop:16}}>
               <Text style={{color:"gray",textAlign:'center',fontSize:15,fontFamily:'arial'}}>Dont have an account? Sign up</Text>
             </Pressable>
           </View>
