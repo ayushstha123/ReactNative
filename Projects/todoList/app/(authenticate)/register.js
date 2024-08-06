@@ -20,7 +20,7 @@ const register = () => {
         email:email,
         password:password,
       }
-      axios.post("http://192.168.1.5:5000/api/register",user).then((response)=>{
+      axios.post("http://localhost:5000/api/register",user).then((response)=>{
         console.log(response);
         Alert.alert("Registration Successful");
         setEmail("");
@@ -28,7 +28,7 @@ const register = () => {
         setName("");
         router.push("/login")
       }).catch((error)=>{
-        console.log("something went wrong",error)
+        console.log("something went wrong!!!",error)
       })
     } catch (error) {
       console.log("something went wrong",error)
