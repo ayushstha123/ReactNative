@@ -1,7 +1,7 @@
 import { Alert, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { KeyboardAvoidingView, TextInput } from 'react-native-web'
+import { KeyboardAvoidingView, TextInput } from 'react-native'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useRouter } from 'expo-router';
@@ -14,20 +14,25 @@ const register = () => {
   const router = useRouter();
 //AsyncStorage is a simple, unencrypted, asynchronous, persistent, key-value storage system that is global to the app. It is used in React Native to store data locally on the device. This can be particularly useful for persisting user preferences, settings, or any small amounts of data that you want to keep between app launches.
   const handleRegister=async()=>{
-    const user={
-      name:name,
-      email:email,
-      password:password,
+    try {
+      const user={
+        name:name,
+        email:email,
+        password:password,
+      }
+      axios.post("http://192.168.1.5:5000/api/register",user).then((response)=>{
+        console.log(response);
+        Alert.alert("Registration Successful");
+        setEmail("");
+        setPassword("");
+        setName("");
+        router.push("/login")
+      }).catch((error)=>{
+        console.log("something went wrong",error)
+      })
+    } catch (error) {
+      console.log("something went wrong",error)
     }
-    axios.post("http://localhost:5000/api/register",user).then((response)=>{
-      console.log(response);
-      Alert.alert("Registration Successful");
-      setEmail("");
-      setPassword("");
-      setName("");
-    }).catch((error)=>{
-      Alert("Registration Failed");
-    })
   }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "black", alignItems: "center" }}>
@@ -41,7 +46,7 @@ const register = () => {
       </View>
       <KeyboardAvoidingView>
         <View style={{ alignItems: 'center' }}>
-          <Text style={{ color: "white", marginBottom: 10, marginTop: 10 }}>Log in to your account!</Text>
+          <Text style={{ color: "white", marginBottom: 10, marginTop: 10 }}>Register your account!</Text>
         </View>
         <View>
         <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: "#E0E0E0", marginTop: 30, paddingVertical: 5, borderRadius: 5 }}>

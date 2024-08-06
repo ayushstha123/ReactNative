@@ -1,7 +1,6 @@
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Image,ScrollView, Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { ScrollView } from 'react-native-web';
 export default function index() {
   const todos = []
   return (
