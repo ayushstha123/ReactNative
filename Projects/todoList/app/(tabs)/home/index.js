@@ -11,6 +11,15 @@ export default function index() {
   const [todo, setTodo] = useState("");
   const [category,setCategory]=useState("All");
 
+  const getTodo=async()=>{
+    try {
+      const response=await axios.get("http://localhost:5000/api/getTask/66b3683974da1e4ca870ca5c").then((response)=>{
+        console.log(response.data)
+      })
+    } catch (error) {
+      
+    }
+  }
 
   const addTodo=async()=>{
     try {
@@ -18,7 +27,7 @@ export default function index() {
         title:todo,
         category:category,
       }
-      axios.post("http://192.168.1.5:5000/api/create/66b3683974da1e4ca870ca5c",todoData).then((response)=>{
+      axios.post("http://localhost:5000/api/create/66b3683974da1e4ca870ca5c",todoData).then((response)=>{
       console.log(response)
       Alert.alert("Todo added successfully");
       })

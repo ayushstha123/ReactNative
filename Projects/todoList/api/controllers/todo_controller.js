@@ -26,6 +26,39 @@ const createTask = async (req, res) => {
     }
 }
 
+const getAllTask=async(req,res)=>{
+    try {
+     const userId=req.params.userId;
+     const user=await User.findById(userId).populate("todos");
+
+     if(!user){
+        res.status(400).json({message:"User not found!"})
+     }
+     res.status(200).json({todos:user.todos})
+    
+    } catch (error) {
+        res.status(200).json({ message: "Something went wrong", error })
+    }
+}
+
+const completedTask = async (req, res) => {
+try {
+    const todoId=req.params.todoId;
+    const updatedTask=await Todo.findByIdUpdate(todoId,{
+        status:"completed",
+        
+    },{new:true});
+
+    if(!updatedTask){
+        return res.status(404).json({error:"Todo not found"})
+    }
+    res.status(200).json({message:"Todo marked as complete",todo:updatedTask})
+} catch (error) {
+    res.status(500).json({error:"Something went wrong!"})
+}
+}
+
 module.exports = {
-    createTask
+    createTask,
+    getAllTask
 };
