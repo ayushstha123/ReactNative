@@ -5,7 +5,7 @@ const cors = require("cors");
 const crypto=require('crypto');
 const bodyParser = require("body-parser");
 const userAuth = require('./router/user_router.js')
-
+const todos=require('./router/todo_router.js')
 const app=express()
 const port = 5000;
 app.use(cors())
@@ -24,3 +24,4 @@ app.listen(port,()=>{
 })
 
 app.use('/api',userAuth)
+app.use('/api',todos)

@@ -14,10 +14,10 @@ const userSchema=mongoose.Schema({
         type:String,
         required:true,
     },
-    todos:{
+    todos:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Todo',
-    }
+    }]
 },{ timestamps: true }
 )
 
