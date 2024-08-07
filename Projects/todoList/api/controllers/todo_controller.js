@@ -44,7 +44,7 @@ const getAllTask=async(req,res)=>{
 const completedTask = async (req, res) => {
 try {
     const todoId=req.params.todoId;
-    const updatedTask=await Todo.findByIdUpdate(todoId,{
+    const updatedTask=await Todo.findByIdAndUpdate(todoId,{
         status:"completed",
         
     },{new:true});
@@ -54,11 +54,12 @@ try {
     }
     res.status(200).json({message:"Todo marked as complete",todo:updatedTask})
 } catch (error) {
-    res.status(500).json({error:"Something went wrong!"})
+    res.status(500).json({error:"Something went wrong! sdf"})
 }
 }
 
 module.exports = {
     createTask,
-    getAllTask
+    getAllTask,
+    completedTask
 };
