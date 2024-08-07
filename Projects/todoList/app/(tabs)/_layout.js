@@ -15,7 +15,6 @@ export default function Layout() {
         tabBarLabelStyle: {
           marginBottom: 5,
           color: "black",
-          fontFamily: "Arial",
           fontWeight: "thin"
         },
         headerShown: false,
