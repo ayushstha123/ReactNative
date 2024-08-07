@@ -1,8 +1,12 @@
 import { Image,ScrollView, Pressable, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { BottomModal, ModalContent, ModalTitle, SlideAnimation } from 'react-native-modals';
+import { TextInput } from 'react-native-web';
 export default function index() {
   const todos = []
+  const [isModalVisible,setModalVisible]=useState(false)
+  const [todo,setTodo]=useState("")
   return (
     <>
       <View style={{ gap: 5, marginHorizontal: 10, marginVertical: 10, flexDirection: "row" }} >
@@ -30,7 +34,7 @@ export default function index() {
           }}>
           <Text style={{ color: "white", textAlign: "center" }}>Personal</Text>
         </Pressable>
-        <Pressable>
+        <Pressable onPress={()=>setModalVisible(!isModalVisible)}>
           <AntDesign name="pluscircle" size={30} color="black" />
         </Pressable>
       </View>
@@ -47,13 +51,31 @@ export default function index() {
                 }}
               />
               <Text style={{margin:20, color: "white", fontFamily: 'Arial', fontWeight: "" }}>No Task Today ! Wanna add a task?</Text>
-              <Pressable>
+              <Pressable onPress={()=>setModalVisible(!isModalVisible)}>
           <AntDesign name="pluscircle" size={30} color="white" />
         </Pressable>
             </View>
           )}
         </View>
       </ScrollView>
+      <BottomModal
+      onHardwareBackPress={()=>setModalVisible(!isModalVisible)}
+      onBackdropPress={()=>setModalVisible(!isModalVisible)}
+      swipeDirection={["up","down"]}
+      swipeThreshold={200}
+      modalTitle={<ModalTitle title="add todo"/>}
+      modalAnimation={
+        new SlideAnimation({ slideFrom: "bottom" })
+      }
+      visible={isModalVisible}
+      onTouchOutside={()=> setModalVisible(!isModalVisible)}
+      >
+        <ModalContent style={{width:"100%",height:200}}>
+          <View>
+            <TextInput value={todo} onChangeText={(text)=>setTodo(text)} placeholder="Create a new Todo here"/>
+          </View>
+        </ModalContent>
+      </BottomModal>
 
     </>
 
