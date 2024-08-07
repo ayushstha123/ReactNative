@@ -1,12 +1,34 @@
-import { Image, ScrollView, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Image, ScrollView, Pressable, StyleSheet, Text, View, Alert } from 'react-native'
 import React, { useState } from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign';
-import Ionicons from '@expo/vector-icons/Ionicons'; import { BottomModal, ModalContent, ModalTitle, SlideAnimation } from 'react-native-modals';
-import { TextInput } from 'react-native-web';
+import Ionicons from '@expo/vector-icons/Ionicons';
+ import { BottomModal, ModalContent, ModalTitle, SlideAnimation } from 'react-native-modals';
+import { TextInput } from 'react-native';
+import axios from 'axios';
 export default function index() {
   const todos = []
   const [isModalVisible, setModalVisible] = useState(false)
-  const [todo, setTodo] = useState("")
+  const [todo, setTodo] = useState("");
+  const [category,setCategory]=useState("All");
+
+
+  const addTodo=async()=>{
+    try {
+      const todoData={
+        title:todo,
+        category:category,
+      }
+      axios.post("http://192.168.1.5:5000/api/create/66b3683974da1e4ca870ca5c",todoData).then((response)=>{
+      console.log(response)
+      Alert.alert("Todo added successfully");
+      })
+      setModalVisible(false)
+      setTodo("");
+    } catch (error) {
+      console.log(error)
+      Alert.alert("Something went wrong")
+    }
+  }
   const suggestions = [
     {
       id: '0',
@@ -63,7 +85,7 @@ export default function index() {
           ) : (
             <View style={{ paddingTop: "40%", paddingBottom: "auto", justifyContent: 'center', alignItems: 'center' }}>
               <Image
-                style={{ width: 200, height: 200, resizeMode: "cover", margin: 10, borderRadius: "50%" }}
+                style={{ width: 200, height: 200, resizeMode: "cover", margin: 10, borderRadius: '50%'}}
                 source={{
                   uri: "https://media.newyorker.com/photos/63b87993e1937a452d9dd0e9/master/w_2560%2Cc_limit/r41710web-story.gif"
                 }}
@@ -91,12 +113,15 @@ export default function index() {
         <ModalContent style={{ width: "100%", height: 280 }} >
           <ScrollView>
             <View style={{ flexDirection: 'row', gap: 10 }}>
-              <TextInput value={todo} onChangeText={(text) => setTodo(text)} style={{ width: '100%', height: 'auto', padding: 10, borderRadius: 5 }} placeholder="Create a new Todo here" />
-              <Ionicons name="send-sharp" size={24} style={{ padding: 10 }} color="black" />
+              <TextInput value={todo} onChangeText={(text) => setTodo(text)} style={{ width: 300, height: 'auto', padding: 10, borderRadius: 5 }} placeholder="Create a new Todo here" />
+              <Ionicons onPress={addTodo}
+              name="send-sharp" size={24} style={{ padding: 10 }} color="black" />
             </View>
             <Text style={{ fontWeight: 'bold', marginTop: 10 }}>Change Category</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginVertical: 10 }}>
-              <Pressable style={{
+              <Pressable
+              onPress={()=>setCategory("Work")}
+              style={{
                 borderColor: 'black',
                 paddingHorizontal: 10,
                 paddingVertical: 4,
@@ -106,7 +131,9 @@ export default function index() {
                 <Text >Work </Text>
               </Pressable>
 
-              <Pressable style={{
+              <Pressable 
+              onPress={()=>setCategory("Personal")}
+              style={{
                 borderColor: 'black',
                 paddingHorizontal: 10,
                 paddingVertical: 4,
@@ -116,7 +143,9 @@ export default function index() {
                 <Text>Personal </Text>
               </Pressable>
 
-              <Pressable style={{
+              <Pressable 
+              onPress={()=>setCategory("All")}
+              style={{
                 borderColor: 'black',
                 paddingHorizontal: 10,
                 paddingVertical: 4,
@@ -130,7 +159,9 @@ export default function index() {
             <Text style={{ fontWeight: 'bold', marginTop: 10 }}>Some Suggestions</Text>
             <View style={{marginTop:10,paddingHorizontal:10,flexDirection:'row',flexWrap:'wrap',gap:10 }}>
               {suggestions.map((item, index) => (
-                <Pressable key={index}>
+                <Pressable
+                onPress={()=>setTodo(item.todo)}
+                key={index}>
                   <Text style={{ padding: 8, borderRadius: 5, backgroundColor: '#F0F8FF', color: 'black', margin: 2}}>{item.todo}</Text>
                 </Pressable>
               ))}

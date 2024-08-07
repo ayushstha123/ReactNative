@@ -32,7 +32,7 @@ const login = () => {
         password:password,
       }
 
-      axios.post("http://localhost:5000/api/login",user).then((response)=>{
+      axios.post("http://192.168.1.5:5000/api/login",user).then((response)=>{
         const token=response.data.token;
         AsyncStorage.setItem("authToken",token)
         Alert.alert("Login Successful");
