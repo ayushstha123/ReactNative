@@ -17,52 +17,45 @@ export default function index() {
   const [marked, setMarked] = useState(false)
   useEffect(() => {
     getTodo();
-    addTodo();
   }, [marked])
   
   const markedTodo = async (id) => {
     try {
-      setMarked(true)
-      const response = axios.patch(`http://localhost:5000/api/update/${id}`);
-        console.log(response.data);
-
+      await axios.patch(`http://localhost:5000/api/update/${id}`);
+      setMarked(!marked); // Toggle marked state to trigger useEffect
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
-
 
   const addTodo = async () => {
     try {
       const todoData = {
         title: todo,
         category: category,
-      }
-      axios.post("http://localhost:5000/api/create/66b3683974da1e4ca870ca5c", todoData).then((response) => {
-        console.log(response)
-        Alert.alert("Todo added successfully");
-      })
-      setModalVisible(false)
+      };
+      await axios.post("http://localhost:5000/api/create/66b39ceeb4b03c41fd35d075", todoData);
+      setModalVisible(false);
       setTodo("");
-
+      setMarked(!marked); // Toggle marked state to trigger useEffect
+      Alert.alert("Todo added successfully");
     } catch (error) {
-      console.log(error)
-      Alert.alert("Something went wrong")
+      console.log(error);
+      Alert.alert("Something went wrong");
     }
   }
 
   const getTodo = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/getTask/66b3683974da1e4ca870ca5c");
+      const response = await axios.get("http://localhost:5000/api/getTask/66b39ceeb4b03c41fd35d075");
       console.log(response.data);
-      setTodos(response.data.todos);
-
       const fetchedTodo = response.data.todos || [];
       const pending = fetchedTodo.filter((todo) => todo.status !== "completed");
       const completed = fetchedTodo.filter((todo) => todo.status === "completed");
 
       setPendingTodo(pending);
       setCompletedTodo(completed);
+      setTodos(fetchedTodo); // Update todos state
     } catch (error) {
       console.log(error);
     }
