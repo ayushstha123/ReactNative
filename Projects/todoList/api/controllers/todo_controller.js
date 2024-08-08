@@ -54,12 +54,30 @@ try {
     }
     res.status(200).json({message:"Todo marked as complete",todo:updatedTask})
 } catch (error) {
-    res.status(500).json({error:"Something went wrong! sdf"})
+    res.status(500).json({error:"Something went wrong!"})
 }
 }
+
+const undoTask = async (req, res) => {
+    try {
+        const todoId=req.params.todoId;
+        const updatedTask=await Todo.findByIdAndUpdate(todoId,{
+            status:"pending",
+            
+        },{new:true});
+    
+        if(!updatedTask){
+            return res.status(404).json({error:"Todo not found"})
+        }
+        res.status(200).json({message:"Todo marked as pending",todo:updatedTask})
+    } catch (error) {
+        res.status(500).json({error:"Something went wrong!"})
+    }
+    }
 
 module.exports = {
     createTask,
     getAllTask,
-    completedTask
+    completedTask,
+    undoTask,
 };

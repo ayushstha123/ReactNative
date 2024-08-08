@@ -1,12 +1,14 @@
 import { Image, ScrollView, Pressable, StyleSheet, Text, View, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { BottomModal, ModalContent, ModalTitle, SlideAnimation } from 'react-native-modals';
 import { TextInput } from 'react-native';
 import Feather from '@expo/vector-icons/Feather';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import axios from 'axios';
+import moment from 'moment';
 export default function index() {
   const [todos, setTodos] = useState([])
   const [isModalVisible, setModalVisible] = useState(false)
@@ -15,14 +17,24 @@ export default function index() {
   const [pendingTodo, setPendingTodo] = useState([]);
   const [completedTodo, setCompletedTodo] = useState([]);
   const [marked, setMarked] = useState(false)
+  const [unMarked, setUnMarked] = useState(true)
   useEffect(() => {
     getTodo();
-  }, [marked])
-  
+  }, [marked, unMarked]);
+
   const markedTodo = async (id) => {
     try {
       await axios.patch(`http://localhost:5000/api/update/${id}`);
       setMarked(!marked); // Toggle marked state to trigger useEffect
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const unMarkedTodo = async (id) => {
+    try {
+      await axios.patch(`http://localhost:5000/api/update/undo/${id}`);
+      setUnMarked(!unMarked); // Toggle marked state to trigger useEffect
     } catch (error) {
       console.log(error);
     }
@@ -112,34 +124,36 @@ export default function index() {
       </View>
       <ScrollView style={{ flex: 1, backgroundColor: "black" }}>
         <View style={{ flex: 1, padding: 10 }}>
+          <Text style={{ color: 'white', fontWeight: 'light', fontSize: 20, marginVertical: 20 }}>🗓️ Today : {moment().format("dddd, MMMM Do, YYYY")}</Text>
           {todos?.length > 0 ? (
             <View>
               {pendingTodo?.length > 0 && (
                 <>
-                <View style={{flexDirection:'row'}}>
-              <MaterialIcons name="pending-actions" style={{marginRight:10,marginTop: 5,}} size={32} color="white" />
-              <Text style={{ color: "white", fontWeight: "bold", marginBottom: 10 ,fontSize:30}}>
-                 Pending Tasks</Text></View></>)}
+                  <View style={{ flexDirection: 'row' }}>
+                    <MaterialIcons name="pending-actions" style={{ marginRight: 10, marginTop: 5, }} size={32} color="white" />
+                    <Text style={{ color: "white", fontWeight: "bold", marginHorizontal: 10, fontSize: 30 }}>
+                      Pending Tasks</Text></View></>)}
 
 
               {pendingTodo?.map((item, index) => (
-                <Pressable key={index} style={{ marginBottom: 10, padding: 10, borderRadius: 7,marginVertical:10, backgroundColor: "#E0E0E0" }}>
-                  <View style={{ flexDirection: "row",alignItems:'center',gap:10 }}>
-                  <Feather onPress={() => markedTodo(item?._id)} name="circle" size={24} color="black" />
-                <Text style={{ color: "black" }}>{item?.title}</Text>
-                </View></Pressable>
+                <Pressable key={index} style={{ marginBottom: 10, padding: 10, borderRadius: 7, marginVertical: 10, backgroundColor: "#E0E0E0" }}>
+                  <View style={{ flexDirection: "row", alignItems: 'center', gap: 10 }}>
+                    <Feather onPress={() => markedTodo(item?._id)} name="circle" size={24} color="black" />
+                    <Text style={{ color: "black" }}>{item?.title}</Text>
+                    <Text style={{ color: "black", marginLeft: "auto" ,backgroundColor:"black", borderRadius:50,padding:10,color:'white'}}>{moment(item?.createdAt).format('hh:mm a')}</Text>
+                  </View></Pressable>
               ))}
-
-<Text style={{ color: "white", fontWeight: "bold", marginBottom: 10 ,fontSize:30}}>Completed Task</Text>
+              <View style={{ marginVertical: 20, justifyContent: 'center', height: 1, backgroundColor: 'white' }} />
+              <Text style={{ color: "white", fontWeight: "bold", marginBottom: 10, fontSize: 30 }}>Completed Task</Text>
               {completedTodo?.length > 0 && (
                 <View>
                   {completedTodo?.map((item, index) => (
-                <Pressable key={index} style={{ marginBottom: 10, padding: 10, borderRadius: 7,marginVertical:10, backgroundColor: "#E0E0E0" }}>
-                  <View style={{ flexDirection: "row",alignItems:'center',gap:10 }}>
-                  <Feather name="circle" size={24} color="black" />
-                <Text style={{ color: "black",textDecorationLine:'line-through',color:'grey' }}>{item?.title}</Text>
-                </View></Pressable>
-              ))}
+                    <Pressable key={index} style={{ marginBottom: 10, padding: 10, borderRadius: 7, marginVertical: 10, backgroundColor: "#E0E0E0" }}>
+                      <View style={{ flexDirection: "row", alignItems: 'center', gap: 10 }}>
+                        <FontAwesome onPress={() => unMarkedTodo(item?._id)} name="check-circle" size={24} color="black" />
+                        <Text style={{ color: "black", textDecorationLine: 'line-through', color: 'grey' }}>{item?.title}</Text>
+                      </View></Pressable>
+                  ))}
                 </View>
               )}
             </View>
