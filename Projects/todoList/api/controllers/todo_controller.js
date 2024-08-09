@@ -75,9 +75,44 @@ const undoTask = async (req, res) => {
     }
     }
 
+const completedDate=async(req,res)=>{
+    try {
+        const date=req.params.date;
+        const completedTodos=await Todo.find({
+            status:'completed',
+            createdAt:{
+                $gte:new Date(`${date}T00:00:00.000Z`), //start of the selected date 
+                $lt:new Date( `${date}T23:59:59.999Z`) //end of the selected date
+            }
+        }).exec()
+        res.status(200).json({completedTodos})
+    } catch (error) {
+        res.status(500).json({message:"Something went wrong",error})
+    }
+}
+
+const todoCount=async(req,res)=>{
+    try {
+        const totalCompletedTodo=await Todo.countDocuments({
+            status:'completed',
+        }).exec();
+        const totalPendingTodos=await Todo.countDocuments({
+            status:'pending',
+        })
+
+        res.status(200).json({
+            totalCompletedTodo,
+            totalPendingTodos})
+    } catch (error) {
+        res.status(500).json({message:"Something went wrong",error})
+    }
+}
+
 module.exports = {
     createTask,
     getAllTask,
     completedTask,
     undoTask,
+    completedDate,
+    todoCount
 };
