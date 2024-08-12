@@ -160,7 +160,7 @@ export default function index() {
           ) : (
             <View style={{ paddingTop: "40%", paddingBottom: "auto", justifyContent: 'center', alignItems: 'center' }}>
               <Image
-                style={{ width: 200, height: 200, resizeMode: "cover", margin: 10, borderRadius: '50%' }}
+                style={{ width: 200, height: 200, resizeMode: "cover", margin: 10, borderRadius: 50 }}
                 source={{
                   uri: "https://media.newyorker.com/photos/63b87993e1937a452d9dd0e9/master/w_2560%2Cc_limit/r41710web-story.gif"
                 }}

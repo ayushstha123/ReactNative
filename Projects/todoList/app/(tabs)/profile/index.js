@@ -1,8 +1,7 @@
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import {ScrollView, Dimensions, StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { LineChart, ProgressChart } from 'react-native-chart-kit';
-import { ScrollView } from 'react-native-web';
 
 export default function Index() {
     const [completedTasks, setCompletedTasks] = useState(0);
